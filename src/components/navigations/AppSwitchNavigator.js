@@ -8,16 +8,15 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import Splash from '@screen/SplashScreen';
 import Loading from '@screen/LoadingScreen';
-
-//import { WalkthroughScreen } from '@screen/menu/screen/walkthroughs/index';
+import Intro from '@screen/IntroScreen';
 
 export default createAppContainer(createSwitchNavigator(
     {
         Splash: { screen: Splash },
         Loading: { screen: Loading },
+        Intro: { screen: Intro },
         //Auth: { screen: AuthStackNavigator },
         //Main: { screen: MainStackNavigator },
-        //Walkthrough: { screen: WalkthroughScreen }
     },
     {
         initialRouteName: 'Splash',

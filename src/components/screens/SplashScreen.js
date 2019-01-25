@@ -105,7 +105,7 @@ class Splash extends Component {
         } else {
             // 현재는 아무이유 없이 3초 보여주는 중.... (변경)=> 사용자 인증 확인을 한다
             //setTimeout(() => {
-            this.props.navigation.navigate("Walkthrough");
+            this.props.navigation.navigate("Intro");
             //}, 3000);           
         } 
     }
