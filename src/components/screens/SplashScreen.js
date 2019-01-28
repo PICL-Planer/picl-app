@@ -97,8 +97,8 @@ class Splash extends Component {
         const userToken = await AsyncStorage.getItem("@Session:token");
         console.log(`userToken : ${userToken}`);
         if (userToken === 'successs') {
-            //this.setState({ isSkipped: true})
-            //this.props.navigation.navigate("Main");
+            this.setState({ isSkipped: true })
+            this.props.navigation.navigate("Main");
         } else if( userToken === 'fail' ) {
             // 앱을 처음 설치하면 소개 화면이 나오게 한다 
             this.props.navigation.navigate("Auth");

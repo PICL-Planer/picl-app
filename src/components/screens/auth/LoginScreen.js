@@ -7,7 +7,13 @@ import {
     TouchableOpacity,
     ImageBackground,
     Keyboard,
-    AsyncStorage
+    AsyncStorage,
+    Text,
+    TextInput,
+    View,
+    KeyboardAvoidingView,
+    ScrollView,
+    Alert,
 } from "react-native";
 
 // import {
@@ -24,6 +30,12 @@ import { getAssetByFilename } from '@util/Images'
 
 //import { GradientButton } from '@kittenDesign';
 //import { FontAwesome } from '@kittenDesign/icons';
+//import NativeButton from 'apsl-react-native-button';
+
+const getByteLengthStr = (str) => {
+    const m = encodeURIComponent(str).match(/%[89ABab]/g);
+    return str.length + (m ? m.length : 0);
+  };
 
 class LoginScreen extends Component {
     static navigationOptions = {
@@ -37,9 +49,75 @@ class LoginScreen extends Component {
             password: ''
         }
     }
+
+    static navigationOptions = {
+        title: 'KeyboardAvoidingView',
+      };
+    
+      state = {
+        input: '',
+        byteLength: 0,
+      };
+    
+      onTextChanged = (text) => {
+        const byteLength = getByteLengthStr(text);
+        if (byteLength > 300) {
+          return;
+        }
+        this.setState({
+          input: text.replace(/(\r\n|\n|\r)/gm, ''),
+          byteLength,
+        });
+      }
+
     render() {
         return (
-            <View><Text>ttt</Text></View>
+            <View>
+                <KeyboardAvoidingView
+                    style={styles.content}
+                    behavior='padding'
+                    enabled
+                    keyboardVerticalOffset={64}
+                >
+                    <ImageBackground style={styles.imgBackground}
+                        source={getAssetByFilename("login")}
+                        resizeMethod='resize' // IOS에서는 기본적으로 resizing을 해주지만 Android에서는 그렇지 않다고 함
+                    >
+                    </ImageBackground>
+                    <ScrollView style={{ alignSelf: 'stretch' }}>
+                        <TextInput
+                            style={[
+                                styles.txtInput,
+                                {
+                                  fontSize: this.state.input ? 18 : 14,
+                                },
+                              ]}
+                              underlineColorAndroid='transparent' // android fix
+                              autoCapitalize='none'
+                              autoCorrect={false}
+                              multiline={true}
+                              placeholderTextColor='rgb(155,155,155)'
+                              onChangeText={(text) => this.onTextChanged(text)}
+                              placeholder={ 'Hi! I am a placeholder!! '}
+                              value={this.state.input}
+                        >
+                            <Text>ttt</Text>
+                        </TextInput>
+                    </ScrollView>
+                    {/* <NativeButton
+                        onPress={() => Alert.alert('Pressed')}
+                        isDisabled={!this.state.input}
+                        activeOpacity={0.75}
+                        style={styles.btnNext}
+                        textStyle={
+                            this.state.input
+                                ? styles.txtNext
+                                : styles.txtNextDisabled
+                        }
+                        disabledStyle={styles.btnNextDisabled}
+                    >Next</NativeButton> */}
+                </KeyboardAvoidingView>
+            </View>
             // <RkAvoidKeyboard
             //     style={styles.screen}
             //     onStartShouldSetResponder={() => true}
@@ -160,14 +238,14 @@ class LoginScreen extends Component {
 
     onLoginResult = (result) => {
         //console.log(result);
-        if(!result.success) {
+        if (!result.success) {
             alert('로그인정보를 확인해라');
             return;
         }
         // 세션 토큰을 사용하면 앱을 계속 로그인 하고 할 수 있다 
 
         try {
-            AsyncStorage.setItem('@Session:token', result.token);            
+            AsyncStorage.setItem('@Session:token', result.token);
         } catch (error) {
             alert('로그인에 실패했습니다')
         }
@@ -250,4 +328,52 @@ const styles = StyleSheet.create(theme => ({
         width: 70,
         height: 60
     },
+
+    content: {
+        flex: 1,
+        backgroundColor: colors.white,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignSelf: 'stretch',
+        alignItems: 'center',
+      },
+      txtInput: {
+        alignSelf: 'stretch', // android fix
+        margin: 20,
+        minHeight: 88,
+        padding: 12,
+        fontSize: 14,
+      },
+      byteTxt: {
+        alignSelf: 'flex-end',
+        color: '#696969',
+        marginRight: 24,
+      },
+      btnNext: {
+        marginBottom: 0,
+        height: 56,
+        backgroundColor: colors.dodgerBlue,
+        borderWidth: 0,
+        borderRadius: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        width: '100%',
+      },
+      container: {
+        flex: 1,
+        backgroundColor: colors.fefefe,
+      },
+      txtNext: {
+        fontSize: 14,
+        color: 'white',
+      },
+      btnNextDisabled: {
+        backgroundColor: 'rgb(243,243,243)',
+      },
+      txtNextDisabled: {
+        fontSize: 14,
+        opacity: 0.4,
+        color: 'black',
+      },
 }));

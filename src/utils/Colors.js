@@ -22,5 +22,8 @@ export const colors = {
     noticeText: '#fff',
 
     accent: '#ff2824',
+    intro1: 'rgb(242,242,242)',
+    intro2: 'rgb(17,181,168)',
+    intro3: 'rgb(82,127,199)',
   };
   

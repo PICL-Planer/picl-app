@@ -9,9 +9,10 @@
   "dependencies": {
     "antd-mobile-rn": "^2.3.3",
     "expo": "^32.0.0",
+    "prop-types": "^15.6.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-app-intro": "^1.1.5",
+    "react-native-app-intro-slider": "^1.0.1",
     "react-native-typography": "^1.4.0",
     "react-navigation": "^3.0.9"
   },

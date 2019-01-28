@@ -3,19 +3,19 @@
 // 위의 단점을 해소못하는 것은 아니지만 매서드를 바꾸거나 dispatch() 를 사용해 reset 같은 처리를 해줘야 한다 
 // 여기에 로그인 화면에 대한 방법이 나와 있다. -> https://reactnavigation.org/docs/en/auth-flow.html 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-//import AuthStackNavigator from '@navigation/AuthStackNavigator';
+import AuthStackNavigator from '@navigation/AuthStackNavigator';
 //import MainStackNavigator from '@navigation/MainStackNavigator';
 
 import Splash from '@screen/SplashScreen';
 import Loading from '@screen/LoadingScreen';
-import Intro from '@screen/IntroScreen';
+import Intro from '@screen/intro/IntroScreen';
 
 export default createAppContainer(createSwitchNavigator(
     {
         Splash: { screen: Splash },
         Loading: { screen: Loading },
         Intro: { screen: Intro },
-        //Auth: { screen: AuthStackNavigator },
+        Auth: { screen: AuthStackNavigator },
         //Main: { screen: MainStackNavigator },
     },
     {

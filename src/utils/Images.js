@@ -1,7 +1,12 @@
 
 // 여기 추가하는게 일이다.... 
 const resources = {
-    "splash": require('../../assets/images/splash.png'),
+    "splash": require('../../assets/images/intro/splash.png'),
+    "intro1": require('../../assets/images/intro/intro1.png'),
+    "intro2": require('../../assets/images/intro/intro2.png'),
+    "intro3": require('../../assets/images/intro/intro3.png'),
+
+
     "login": require('../../assets/images/login.png'),
     "stoveLogo": require("../../assets/images/Smilegate_Stove.png"),
     "rpgLogo": require("../../assets/images/Smilegate_RPG.png"),

@@ -4,7 +4,7 @@ import
   Animated 
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { RightHeaderNavigationOptions } from '@navigation/options/RightHeaderNavigationOptions';
+//import { RightHeaderNavigationOptions } from '@navigation/options/RightHeaderNavigationOptions';
 // 화면전환시 에니메이션 효과이다... 이런 디테일은 뭐.. 옵션은 아래서 설정 
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 
