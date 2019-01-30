@@ -19,11 +19,13 @@ export const colors = {
     warningBackground: '#EAEB5E',
     warningText: '#666804',
     noticeBackground: '#2f95dc',
-    noticeText: '#fff',
+    
 
     accent: '#ff2824',
     intro1: 'rgb(242,242,242)',
     intro2: 'rgb(17,181,168)',
     intro3: 'rgb(82,127,199)',
+    noticeText: '#fff',
+    baseColor: 'rgb(26,188,156)',
   };
   

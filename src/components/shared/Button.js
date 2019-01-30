@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Button extends Component {
+class CustomButton extends Component {
   static defaultProps = {
     isLoading: false,
     isDisabled: false,
@@ -104,4 +104,4 @@ class Button extends Component {
   }
 }
 
-export default Button;
+export default CustomButton;

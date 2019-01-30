@@ -5,9 +5,10 @@ const resources = {
     "intro1": require('../../assets/images/intro/intro1.png'),
     "intro2": require('../../assets/images/intro/intro2.png'),
     "intro3": require('../../assets/images/intro/intro3.png'),
+    "login": require('../../assets/images/login/login.png'),
+    "social-button": require('../../assets/images/login/social-button.png'),
 
-
-    "login": require('../../assets/images/login.png'),
+   
     "stoveLogo": require("../../assets/images/Smilegate_Stove.png"),
     "rpgLogo": require("../../assets/images/Smilegate_RPG.png"),
     "banner1": require("../../assets/images/banner/shop_banner1.png"),

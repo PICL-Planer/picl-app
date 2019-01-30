@@ -25,7 +25,9 @@ export default class App extends Component {
             return (
                 <View style={styles.container}>
                     {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                    <AppSwitchNavigator />
+                    <AppSwitchNavigator 
+                        ref={nav => { this.navigator = nav }} // 3버전에서 나타난 것
+                    />
                 </View>
             );
         }

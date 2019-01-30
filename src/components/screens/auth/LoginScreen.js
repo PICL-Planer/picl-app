@@ -8,205 +8,143 @@ import {
     ImageBackground,
     Keyboard,
     AsyncStorage,
-    Text,
     TextInput,
-    View,
     KeyboardAvoidingView,
     ScrollView,
     Alert,
 } from "react-native";
 
-// import {
-//     RkButton,
-//     RkText,
-//     RkTextInput,
-//     RkAvoidKeyboard,
-//     RkTheme,
-//     RkStyleSheet,
-// } from 'react-native-ui-kitten';
-
+import CustomButton from '@shared/Button';
+import CustomTextInput from '@shared/TextInput';
 import { statusBarHeight } from '@util/Styles';
 import { getAssetByFilename } from '@util/Images'
+import { colors } from '@util/Colors';
 
-//import { GradientButton } from '@kittenDesign';
-//import { FontAwesome } from '@kittenDesign/icons';
-//import NativeButton from 'apsl-react-native-button';
-
-const getByteLengthStr = (str) => {
+const _getByteLengthStr = (str) => {
     const m = encodeURIComponent(str).match(/%[89ABab]/g);
     return str.length + (m ? m.length : 0);
-  };
+};
 
 class LoginScreen extends Component {
     static navigationOptions = {
         header: null
     }
+
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: false,
-            account: '',
-            password: ''
+            id: '',
+            password: '',
+            isLogin: false, 
+            isLoggingIn: false
         }
-    }
-
-    static navigationOptions = {
-        title: 'KeyboardAvoidingView',
-      };
-    
-      state = {
-        input: '',
-        byteLength: 0,
-      };
-    
-      onTextChanged = (text) => {
-        const byteLength = getByteLengthStr(text);
-        if (byteLength > 300) {
-          return;
-        }
-        this.setState({
-          input: text.replace(/(\r\n|\n|\r)/gm, ''),
-          byteLength,
-        });
-      }
+    }   
 
     render() {
         return (
-            <View>
-                <KeyboardAvoidingView
-                    style={styles.content}
-                    behavior='padding'
-                    enabled
-                    keyboardVerticalOffset={64}
-                >
-                    <ImageBackground style={styles.imgBackground}
-                        source={getAssetByFilename("login")}
-                        resizeMethod='resize' // IOS에서는 기본적으로 resizing을 해주지만 Android에서는 그렇지 않다고 함
-                    >
-                    </ImageBackground>
-                    <ScrollView style={{ alignSelf: 'stretch' }}>
-                        <TextInput
-                            style={[
-                                styles.txtInput,
-                                {
-                                  fontSize: this.state.input ? 18 : 14,
-                                },
-                              ]}
-                              underlineColorAndroid='transparent' // android fix
-                              autoCapitalize='none'
-                              autoCorrect={false}
-                              multiline={true}
-                              placeholderTextColor='rgb(155,155,155)'
-                              onChangeText={(text) => this.onTextChanged(text)}
-                              placeholder={ 'Hi! I am a placeholder!! '}
-                              value={this.state.input}
-                        >
-                            <Text>ttt</Text>
-                        </TextInput>
-                    </ScrollView>
-                    {/* <NativeButton
-                        onPress={() => Alert.alert('Pressed')}
-                        isDisabled={!this.state.input}
-                        activeOpacity={0.75}
-                        style={styles.btnNext}
-                        textStyle={
-                            this.state.input
-                                ? styles.txtNext
-                                : styles.txtNextDisabled
-                        }
-                        disabledStyle={styles.btnNextDisabled}
-                    >Next</NativeButton> */}
-                </KeyboardAvoidingView>
-            </View>
-            // <RkAvoidKeyboard
+            // <KeyboardAvoidingView
             //     style={styles.screen}
-            //     onStartShouldSetResponder={() => true}
-            //     onResponderRelease={() => Keyboard.dismiss()}
+            //     behavior='padding'
+            //     enabled
+            //     keyboardVerticalOffset={64}
+            //     //onResponderRelease={() => Keyboard.dismiss()}
             // >
-            //     <ImageBackground style={styles.imgBackground}
-            //         source={getAssetByFilename("login")}
-            //         resizeMethod='resize' // IOS에서는 기본적으로 resizing을 해주지만 Android에서는 그렇지 않다고 함
-            //     >
-            //         <View style={styles.header}>
-            //             <RkText rkType='logo h0 primary'>Lost Ark</RkText>
-            //             <RkText rkType='light h1 primary'>Companion</RkText>
-            //         </View>
-            //         <View style={styles.content}>
-            //             <View>
-            //                 <RkTextInput
-            //                     rkType='rounded'
-            //                     placeholder='Username'
-            //                     value={this.state.account}
-            //                     onChangeText={(text) => this.onTextChanged('Account', text)}
-            //                 />
-            //                 <RkTextInput
-            //                     rkType='rounded'
-            //                     placeholder='Password'
-            //                     secureTextEntry
-            //                     value={this.state.password}
-            //                     onChangeText={(text) => this.onTextChanged('Password', text)}
-            //                 />
-            //                 <View style={styles.btnWrap}>
-            //                     <GradientButton
-            //                         style={styles.btn}
-            //                         rkType='large'
-            //                         text='LOGIN'
-            //                         onPress={this.onLogin}
-            //                     />
-            //                     <GradientButton
-            //                         style={styles.btn}
-            //                         rkType='large'
-            //                         text='SIGN UP'
-            //                         onPress={this.onSignUp}
-            //                     />
-            //                 </View>
-            //             </View>
-            //             <View style={styles.btnSocialWrap}>
-            //                 <RkButton style={styles.btnSocial} rkType='social'>
-            //                     <RkText rkType='awesome hero'>{FontAwesome.twitter}</RkText>
-            //                 </RkButton>
-            //                 <RkButton style={styles.btnSocial} rkType='social'>
-            //                     <RkText rkType='awesome hero'>{FontAwesome.google}</RkText>
-            //                 </RkButton>
-            //                 <RkButton style={styles.btnSocial} rkType='social'>
-            //                     <RkText rkType='awesome hero'>{FontAwesome.facebook}</RkText>
-            //                 </RkButton>
-            //             </View>
-            //             <View style={styles.footer}>
-            //                 <View style={styles.textRow}>
-            //                     <RkText rkType='primary3' style={styles.baseFont}>Do you forgot your account?</RkText>
-            //                     <RkButton rkType='clear' onPress={this.onFindPW}>
-            //                         <RkText rkType='header6' style={styles.baseFont}>Find my password</RkText>
-            //                     </RkButton>
-            //                 </View>
-            //             </View>
-            //             <View style={styles.logoWrap}>
-            //                 <Image style={styles.logo} source={getAssetByFilename("stoveLogo")} />
-            //                 <Image style={styles.logo} source={getAssetByFilename("rpgLogo")} />
-            //             </View>
-            //         </View>
-            //     </ImageBackground>
-            // </RkAvoidKeyboard>
+                <ImageBackground style={styles.imgBackground}
+                    source={getAssetByFilename("login")}
+                    resizeMethod='resize' // IOS에서는 기본적으로 resizing을 해주지만 Android에서는 그렇지 않다고 함
+                >
+                    <ScrollView style={{}}>
+                        <View style={{ flexDirection: 'column', alignItems: 'center',}}>
+                            <View style={{ marginTop: 100, width: '80%' }}>
+                                <CustomTextInput                     
+                                    txtHint={'이메일 주소 입력'}
+                                    txtLabel={'ID'}
+                                    txt={this.state.id}                                
+                                    onTextChanged={ (text) => this.onTextChanged('ID', text)}
+                                />
+                                <CustomTextInput 
+                                    style={{ marginTop: 10 }}
+                                    txtHint={'비밀번호 입력(숫자, 문자조합 8자리 이상)'}
+                                    txtLabel={'PASSWORD'}
+                                    txt={this.state.password}
+                                    onTextChanged={ (text) => this.onTextChanged('PASSWORD', text)}
+                                />
+                            </View>
+                        </View>
+                        <View style={{ marginTop: 40, flexDirection: 'row', justifyContent: 'space-around'}}>
+                            <TouchableOpacity
+                                underlayColor='red'
+                                onPress={this.onFindPW}
+                            >
+                                <Text style={{ fontSize: 20 }}>비밀번호 찾기</Text>
+                            </TouchableOpacity>
+                            <Text style={{ fontSize: 20 }}>|</Text>
+                            <TouchableOpacity
+                                underlayColor='red'
+                                onPress={this.onSignUp}
+                            >
+                                <Text style={{ fontSize: 20 }}>서비스 가입</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center',}}>
+                            <View style={{ width: '80%'}}>
+                            <CustomButton                    
+                                id='login'
+                                constainerStyle={{ flex: 1 }}
+                                isLoading={this.state.isLoggingIn}
+                                onPress={() => this.onLogin()}
+                                style={styles.btnLogin}
+                                textStyle={styles.txtLogin}    
+                            >{'로그인'}</CustomButton>
+                            </View>
+                        </View>
+                        <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-around' }}>
+                            <Image
+                                style={{width: 350, height: 150 }}
+                                source={getAssetByFilename("social-button")}
+                                resizeMethod='resize' 
+                            />
+                        </View>
+                        <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center', }}>                            
+                            <Text style={{ fontSize: 15}}>Copyright(c)2019 PICL All rights reserved.</Text>
+                        </View>                        
+                    </ScrollView>
+                </ImageBackground>
+            //</KeyboardAvoidingView>
         );
     }
 
     onTextChanged = (type, text) => {
+        const byteLength = _getByteLengthStr(text);
+        if (byteLength > 100) {
+            Alert.alert("100글자 이상은 입력 불가합니다")
+            return;
+        }
+
+        text.replace(/(\r\n|\n|\r)/gm, '');
+
         switch (type) {
-            case 'Account':
-                this.setState({ account: text });
+            case 'ID':
+                this.setState({ id: text });
                 return;
-            case 'Password':
+            case 'PASSWORD':
                 this.setState({ password: text });
                 return;
         }
     }
+
     onSignUp = () => {
         this.props.navigation.navigate('SignUp');
     }
 
+    onFindPW = () => {
+        this.props.navigation.navigate('FindPW');
+    }
+
     onLogin = () => {
         this.setState({
-            isLogin: true
+            isLogin: true,
+            isLoggingIn: true,
         }, async () => {
             // 원래는 네트워크 통신으로 인증을 해야 한다.. 임시방편 
             //const userData = auth(this.state.email, this.state.pw);
@@ -230,7 +168,7 @@ class LoginScreen extends Component {
             // });
 
             var ret = { success: true, token: 'success' }
-            this.onLoginResult(ret);
+            //this.onLoginResult(ret);
 
             this.props.navigation.navigate('Loading', { isLogin: true });
         })
@@ -256,124 +194,39 @@ class LoginScreen extends Component {
         //     actions: [{ routeName: 'List'}]
         // })
     }
-
-    onFindPW = () => {
-        this.props.navigation.navigate('FindPW');
-    }
-
-
-
-
 }
 export default LoginScreen;
 
-const styles = StyleSheet.create(theme => ({
+const styles = StyleSheet.create({
     screen: {
-        //padding: scaleVertical(16),
         flex: 1,
         paddingTop: statusBarHeight,
-        justifyContent: 'space-between',
-        //backgroundColor: theme.colors.screen.base,
     },
     imgBackground: {
         width: '100%',
         height: '100%',
     },
-    header: {
-        marginTop: 50,
-        left: 20
-    },
-    content: {
-        top: 80,
-        margin: 20,
-    },
-    btnWrap: {
-        flexDirection: "row",
-        justifyContent: 'space-around'
-    },
-    btn: {
-        marginVertical: 20,
-        width: 150,
-        marginLeft: 10,
-        marginRight: 10,
-    },
-    btnSocialWrap: {
-        flexDirection: 'row',
-        //marginBottom: scaleVertical(24),
-        marginHorizontal: 24,
-        justifyContent: 'space-around',
-    },
-    btnSocial: {
-        //borderColor: theme.colors.border.solid,
-    },
-    baseFont: {
-        color: 'white'
-    },
-    footer: {
 
-    },
-    textRow: {
-        flexDirection: 'column',
-        justifyContent: 'center',
+    btnLogin: {
+        backgroundColor: colors.baseColor,
+        borderColor: colors.baseColor,
+        borderRadius: 4,
+        borderWidth: 1,
+        height: 60,
+        shadowColor: colors.baseColor,
+        shadowOffset: {
+          width: 0,
+          height: 10,
+        },
+        shadowRadius: 4,
+        shadowOpacity: 0.3,
+    
         alignItems: 'center',
-    },
-    logoWrap: {
-        flexDirection: 'row',
-        marginTop: 10,
-        justifyContent: "space-around"
-    },
-    logo: {
-        marginLeft: -80,
-        marginRight: -80,
-        width: 70,
-        height: 60
-    },
-
-    content: {
-        flex: 1,
-        backgroundColor: colors.white,
-        flexDirection: 'column',
         justifyContent: 'center',
-        alignSelf: 'stretch',
-        alignItems: 'center',
       },
-      txtInput: {
-        alignSelf: 'stretch', // android fix
-        margin: 20,
-        minHeight: 88,
-        padding: 12,
-        fontSize: 14,
-      },
-      byteTxt: {
-        alignSelf: 'flex-end',
-        color: '#696969',
-        marginRight: 24,
-      },
-      btnNext: {
-        marginBottom: 0,
-        height: 56,
-        backgroundColor: colors.dodgerBlue,
-        borderWidth: 0,
-        borderRadius: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        width: '100%',
-      },
-      container: {
-        flex: 1,
-        backgroundColor: colors.fefefe,
-      },
-      txtNext: {
-        fontSize: 14,
+      txtLogin: {
+        fontSize: 20,
+        fontWeight: 'bold',
         color: 'white',
       },
-      btnNextDisabled: {
-        backgroundColor: 'rgb(243,243,243)',
-      },
-      txtNextDisabled: {
-        fontSize: 14,
-        opacity: 0.4,
-        color: 'black',
-      },
-}));
+});

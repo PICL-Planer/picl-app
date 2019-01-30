@@ -4,7 +4,7 @@
 // 여기에 로그인 화면에 대한 방법이 나와 있다. -> https://reactnavigation.org/docs/en/auth-flow.html 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import AuthStackNavigator from '@navigation/AuthStackNavigator';
-//import MainStackNavigator from '@navigation/MainStackNavigator';
+import MainStackNavigator from '@navigation/MainStackNavigator';
 
 import Splash from '@screen/SplashScreen';
 import Loading from '@screen/LoadingScreen';
@@ -16,7 +16,7 @@ export default createAppContainer(createSwitchNavigator(
         Loading: { screen: Loading },
         Intro: { screen: Intro },
         Auth: { screen: AuthStackNavigator },
-        //Main: { screen: MainStackNavigator },
+        Main: { screen: MainStackNavigator },
     },
     {
         initialRouteName: 'Splash',

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   label: {
-    color: colors.blueyGray,
+    color: colors.noticeText,
     marginBottom: 8 * ratio,
     fontSize: 12 * ratio,
   },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   input: {
     alignSelf: 'stretch',
-    color: colors.dusk,
+    color: colors.noticeText,
     fontSize: 16 * ratio,
     paddingVertical: 22 * ratio,
     paddingHorizontal: 20 * ratio,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   inputFocus: {
     alignSelf: 'stretch',
-    color: colors.dusk,
+    color: colors.noticeText,
     fontSize: 16 * ratio,
     paddingVertical: 22 * ratio,
     paddingHorizontal: 20 * ratio,
@@ -64,7 +64,7 @@ class CustomTextInput extends Component {
   static defaultProps = {
     labelStyle: styles.label,
     labelStyleFocus: styles.labelFocus,
-    placeholderTextColor: 'rgb(134,154,183)',
+    placeholderTextColor: 'rgb(242,242,242)',
     isPassword: false,
     multiline: false,
     txtLabel: '',
