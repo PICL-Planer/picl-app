@@ -12,28 +12,23 @@ import { colors } from '@util/Colors';
 export const RightHeaderNavigationOptions = ({ navigation }) => ({
     //headerBackTitle: null, // ???? 
 
-    header: null,
     headerStyle: {
-        backgroundColor: colors.blueyGray,
-        borderBottomColor: 'red',
+        backgroundColor: colors.baseColor,
+        borderBottomColor: 'gray',
         borderBottomWidth: 1,
         elevation: 0,
         //
     },
     headerTitleStyle: {
         flex: 1,
-        color: 'white',
+        color: colors.noticeText,
         textAlign: 'center',
         //
     },
-    headerTintColor: 'red',
+    // 뒤로가기 버튼 색
+    headerTintColor: colors.noticeText,
+    // 아래처럼 해야 가운데 정렬이 딱된다... 
     headerRight:
-        <View>
-            <TouchableOpacity
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate('')}
-            >
-                <Text style={{ marginRight: 20 }}>????</Text>
-            </TouchableOpacity>
+        <View>           
         </View>,
 })

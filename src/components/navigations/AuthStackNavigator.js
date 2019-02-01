@@ -14,11 +14,11 @@ import FindPWScreen from '@screen/auth/FindPWScreen';
 
 export default AuthStackNavigator = createStackNavigator({
     Login: { screen: LoginScreen },
-    SignUp: { screen: SignUpScreen },
+    SignUp: { screen: SignUpScreen, },
     FindPW: { screen: FindPWScreen }
 }, {
     initialRouteName: "Login",
-    navigationOptions: RightHeaderNavigationOptions,
+    defaultNavigationOptions: RightHeaderNavigationOptions,
 
     // 아래 방식은 옛날 방식이다 경로를 지정해 주는데 이 경로가 라이브러리 버전이 바뀌면 같이 바뀐다 
     //transitionConfig: () => ({ screenInterpolator: StackViewStyleInterpolator.forFade }),

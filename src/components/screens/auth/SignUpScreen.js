@@ -7,29 +7,31 @@ import {
     KeyboardAvoidingView
 } from "react-native";
 
-// import {
-//     RkButton,
-//     RkText,
-//   } from 'react-native-ui-kitten';
+import { InputItem, List, DatePicker } from 'antd-mobile-rn';
 
 import { colors } from '@util/Colors';
 
 import Button from '@shared/Button';
 import TextInput from '@shared/TextInput';
 import StatusBar from '@shared/StatusBar';
+import enUS from './en_US'
+
+const now = new Date()
 
 class SignUpScreen extends Component {
     static navigationOptions = {
-        title: 'Sign Up'
+        title: '서비스 가입'
     }
     constructor(props) {
         super(props);
         this.state = {
             account: '',
             password: '',
-            email: '',
-            confirmPassword: '',
-            isRegistering: false
+            rePassword: '',
+            birthday: undefined,
+
+            isRegistering: false,
+
         }
     }
     render() {
@@ -46,36 +48,54 @@ class SignUpScreen extends Component {
                     contentContainerStyle={styles.scrollViewContainer}  // 정렬용
                 >
                     <View style={styles.wrapper}>
-                        <TextInput
-                            style={styles.inputBox}
-                            txtLabel={('Account')}
-                            txtHint={('Account')}
-                            txt={this.state.account}
-                            onTextChanged={(text) => this.onTextChanged('Account', text)}
-                        />
-                        <TextInput
-                            style={styles.inputBox}
-                            txtLabel={('Email')}
-                            txtHint={('Email')}
-                            txt={this.state.email}
-                            onTextChanged={(text) => this.onTextChanged('Email', text)}
-                        />
-                        <TextInput
-                            style={styles.inputBox}
-                            txtLabel={('Password')}
-                            txtHint={('Password')}
-                            txt={this.state.password}
-                            onTextChanged={(text) => this.onTextChanged('Password', text)}
-                            isPassword={true}
-                        />
-                        <TextInput
-                            style={styles.inputBox}
-                            txtLabel={('Confirm Password')}
-                            txtHint={('Confirm Password')}
-                            txt={this.state.confirmPassword}
-                            onTextChanged={(text) => this.onTextChanged('ConfirmPassword', text)}
-                            isPassword={true}
-                        />
+                        <List renderHeader={() => '계정'}>
+                            <InputItem
+                                clear                                
+                                onErrorPress={() => alert('clicked me')}
+                                value={this.state.account}
+                                onChange={(value) => this.setState({ value })}                                
+                                placeholder='이메일 주소 입력'
+                            >
+                                <Text style={{ fontSize: 10, color: 'black'}}>ID</Text>
+                            </InputItem>
+                            <InputItem
+                                clear
+                                onErrorPress={() => alert('clicked me')}
+                                value={this.state.password}
+                                onChange={(value) => this.setState({ value })}                                
+                                placeholder='비밀번호 입력'
+                            >
+                                <Text style={{ fontSize: 10, color: 'black'}}>PASSWORD</Text>
+                            </InputItem>
+                            <InputItem
+                                clear
+                                onErrorPress={() => alert('clicked me')}
+                                value={this.state.rePassword}
+                                onChange={(value) => this.setState({ value })}                                
+                                placeholder='비밀번호를 한번 더 입력하세요'
+                            >
+                                <Text style={{ fontSize: 10, color: 'black'}}>RE-PASSWORD</Text>
+                            </InputItem>
+                        </List>
+                        <List renderHeader={() => '추가 항목'}>
+                            <DatePicker
+                                defaultDate={now}
+                                value={this.state.birthday}
+                                mode='date'
+                                minDate={this.date1MinDate || (this.date1MinDate = new Date(1980, 1, 1))}
+                                maxDate={this.date1MaxDate || (this.date1MaxDate = now)}
+                                onChange={this.onDateChange}
+                                format='YYYY-MM-DD'
+                                locale={enUS}
+                            >
+                                <List.Item arrow='horizontal'>
+                                    <Text style={{ color: 'black'}}>생년월일</Text>
+                                </List.Item>
+                            </DatePicker>
+                        </List>
+
+
+                        
                         <View style={styles.btnWrapper}>
                             <Button
                                 isLoading={this.state.isRegistering}
@@ -95,6 +115,8 @@ class SignUpScreen extends Component {
             </KeyboardAvoidingView>
         );
     }
+
+    onDateChange = birthday => this.setState({ birthday })
 
     onTextChanged = (type, text) => {
         switch (type) {
@@ -145,10 +167,9 @@ const styles = StyleSheet.create({
     scrollViewContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 40,
     },
     wrapper: {
-        width: '80%',
+        width: '100%',
         flexDirection: 'column',
     },
     btnWrapper: {
