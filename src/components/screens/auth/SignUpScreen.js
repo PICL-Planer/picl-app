@@ -111,14 +111,14 @@ class SignUpScreen extends Component {
                                             style={{ borderWidth: 1, borderColor: '#999', margin: 10 }}>
                                             남자
                                         </Radio>
-                                            <Radio checked={this.state.sex === 2}
-                                                onChange={(event) => {
-                                                    if (event.target.checked) {
+                                        <Radio checked={this.state.sex === 2}
+                                            onChange={(event) => {
+                                                if (event.target.checked) {
                                                         this.setState({ sex: 2 })
-                                                    }
-                                                }}
-                                                style={{ borderWidth: 1, borderColor: '#999', margin: 10 }}>
-                                                여자
+                                                }
+                                            }}
+                                            style={{ borderWidth: 1, borderColor: '#999', margin: 10 }}>
+                                            여자
                                         </Radio>
                                     </View>
                                 </View>

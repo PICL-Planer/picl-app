@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { 
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity
 } from "react-native";
 
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-
-import { screenWidth } from '@util/Styles'
+import { screenWidth } from '@util/Styles';
 
 class HomeScreen extends Component {
+    
     constructor(props){
         super(props);
         this.state ={
@@ -57,7 +58,7 @@ class HomeScreen extends Component {
                     rowHasChanged={this.rowHasChanged}
                     // Hide knob button. Default = false
                     //hideKnob={true}
-                    // markingType={'period'}
+                    markingType={'period'}
                     // // By default, agenda dates are marked if they have at least one item, but you can override this if needed
                     // markedDates={
                     //     {
@@ -76,10 +77,14 @@ class HomeScreen extends Component {
                     // agenda theme
                     theme={{
                         //...calendarTheme,
+                        selectedDayTextColor: 'red',
                         agendaDayTextColor: 'yellow',
                         agendaDayNumColor: 'green',
                         agendaTodayColor: 'red',
-                        agendaKnobColor: 'blue'
+                        agendaKnobColor: 'blue',
+                        agendaKnobColor: 'green',
+                        //calendarBackground: 'red',
+                        selectedDayBackgroundColor: '#00adf5',
                     }}
                     // agenda container style
                     style={{}}
