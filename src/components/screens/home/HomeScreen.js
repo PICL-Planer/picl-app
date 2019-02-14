@@ -8,15 +8,58 @@ import {
 
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { screenWidth } from '@util/Styles';
+import PropTypes from "prop-types";
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-class HomeScreen extends Component {
+export class HeaderLeft extends Component {
+    constructor(props){
+        super(props);
+
+        console.log(props)
+
+    }
+
+
+
+    render() {
+        return (
+        <View>
+            <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => this.props.navigation.navigate("Home", {today: this.props.today})}
+            >
+                <View style={styles.iconWrap}>
+                    <MaterialIcons name={'today'} size={35} color={'white'} />
+                </View>
+            </TouchableOpacity>
+        </View>
+        )
+    }
+}
+
+
+class HomeScreen extends Component {    
     
     constructor(props){
         super(props);
+
+        const today = this.props.navigation.getParam('today', undefined);
+        console.log(today);
+
         this.state ={
             items: {},
+            today: today === undefined ? null : today,
+            test: 1,
         }
     }
+
+    onPressLeftHeader = () => {
+        console.log("aaaa");
+        return (
+           <View></View>
+        )        
+    }
+
     render() {
         return (
             <View style={styles.container}>                

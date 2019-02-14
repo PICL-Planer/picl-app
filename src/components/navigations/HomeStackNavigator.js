@@ -6,6 +6,8 @@ import { RightHeaderNavigationOptions } from "@navigation/options/home/RightHead
 //import { OldBothHeaderNavigationOptions } from '@navigation/options/home/OldBothHeaderNavigationOptions';
 
 import HomeScreen from '@screen/home/HomeScreen';
+import TestScreen from '@screen/home/Test';
+
 // import OldHomeScreen from '@screen/home/OldHomeScreen';
 // import NoticeScreen from '@screen/home/NoticeScreen';
 // import DetailNoticeScreen from '@screen/home/details/DetailNoticeScreen';
@@ -26,7 +28,7 @@ import HomeScreen from '@screen/home/HomeScreen';
 // import MyScreen from "@screen/home/header/MyScreen";
 
 const routeConfig = {
-    Home: { screen: HomeScreen, navigationOptions: BothHeaderNavigationOptions }
+    Home: { screen: HomeScreen, navigationOptions: BothHeaderNavigationOptions },
     //OldHome: { screen: OldHomeScreen, navigationOptions: OldBothHeaderNavigationOptions },
     //Notice: { screen: NoticeScreen, },
     //DetailNotice: { screen: DetailNoticeScreen },
@@ -45,7 +47,7 @@ const routeConfig = {
 
     //Alarm: { screen: AlarmScreen, },
     //My: { screen: MyScreen },
-
+    Test: { screen: TestScreen }
 
 }
 
