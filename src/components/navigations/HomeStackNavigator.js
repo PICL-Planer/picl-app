@@ -1,12 +1,12 @@
 import { createStackNavigator } from 'react-navigation';
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 import { BothHeaderNavigationOptions } from '@navigation/options/home/BothHeaderNavigationOptions';
-
 import { RightHeaderNavigationOptions } from "@navigation/options/home/RightHeaderNavigationOptions"
+
 //import { OldBothHeaderNavigationOptions } from '@navigation/options/home/OldBothHeaderNavigationOptions';
 
 import HomeScreen from '@screen/home/HomeScreen';
-import TestScreen from '@screen/home/Test';
+import CreateTaskScreen from '@screen/home/CreateTaskScreen';
 
 // import OldHomeScreen from '@screen/home/OldHomeScreen';
 // import NoticeScreen from '@screen/home/NoticeScreen';
@@ -29,6 +29,7 @@ import TestScreen from '@screen/home/Test';
 
 const routeConfig = {
     Home: { screen: HomeScreen, navigationOptions: BothHeaderNavigationOptions },
+    CreateTask: { screen: CreateTaskScreen, navigationOptions: RightHeaderNavigationOptions },
     //OldHome: { screen: OldHomeScreen, navigationOptions: OldBothHeaderNavigationOptions },
     //Notice: { screen: NoticeScreen, },
     //DetailNotice: { screen: DetailNoticeScreen },
@@ -47,7 +48,7 @@ const routeConfig = {
 
     //Alarm: { screen: AlarmScreen, },
     //My: { screen: MyScreen },
-    Test: { screen: TestScreen }
+
 
 }
 

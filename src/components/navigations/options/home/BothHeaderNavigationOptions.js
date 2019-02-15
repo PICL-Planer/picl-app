@@ -10,17 +10,11 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '@util/Colors';
 
 import HeaderButton from '@screen/home/HeaderCalendar';
-import { HeaderLeft } from '@screen/home/HomeScreen';
-
-
-
 
 const datetimeToString = () => {
     const date = new Date();
     return date.toISOString().split('T')[0];
-  }
-
-
+}
 
 export const BothHeaderNavigationOptions = ({ navigation }) => ({
     headerBackTitle: null,
@@ -40,34 +34,29 @@ export const BothHeaderNavigationOptions = ({ navigation }) => ({
     
     headerTitle: <HeaderButton navigation={navigation} today={datetimeToString()}/>,
     //title: ,
-    // headerLeft: () => {
-    //     const { routeName } = navigation.state;     // 알람 개수를 파라미터로 받아와야 할 듯
-    //     return (
-    //         <TouchableOpacity
-    //             activeOpacity={0.5}
-    //             onPress={() => navigation.navigate("Home")}
-    //         >
-    //             <View style={styles.iconWrap}>
-    //                 <MaterialIcons name={'today'} size={35} color={'white'} />
-    //             </View>
-    //         </TouchableOpacity>
-    //     )
-    // },
-    headerLeft: <HeaderLeft navigation={navigation} today={datetimeToString()}/>,
+    headerLeft: () => {
+        const { routeName } = navigation.state;     // 알람 개수를 파라미터로 받아와야 할 듯
+        return (
+            <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => navigation.state.params.onPressLeftHeader() }
+            >
+                <View style={styles.iconWrap}>
+                    <MaterialIcons name={'today'} size={35} color={'white'} />
+                </View>
+            </TouchableOpacity>
+        )
+    },
     headerRight: 
             <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => navigation.navigate('Add')}
+                onPress={() => navigation.navigate('CreateTask')}
             >
                 <View style={styles.iconWrap}>
                     <MaterialCommunityIcons name={'calendar-edit'} size={35} color={'white'} />
                 </View>
             </TouchableOpacity>,
 })
-
-
-
-
 
 const styles = StyleSheet.create({
     iconWrap: {

@@ -11,59 +11,39 @@ import { screenWidth } from '@util/Styles';
 import PropTypes from "prop-types";
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-export class HeaderLeft extends Component {
+
+const datetimeToString = () => {
+    const date = new Date();
+    return date.toISOString().split('T')[0];
+  }
+
+class HomeScreen extends Component { 
     constructor(props){
         super(props);
 
-        console.log(props)
-
-    }
-
-
-
-    render() {
-        return (
-        <View>
-            <TouchableOpacity
-                activeOpacity={0.5}
-                onPress={() => this.props.navigation.navigate("Home", {today: this.props.today})}
-            >
-                <View style={styles.iconWrap}>
-                    <MaterialIcons name={'today'} size={35} color={'white'} />
-                </View>
-            </TouchableOpacity>
-        </View>
-        )
-    }
-}
-
-
-class HomeScreen extends Component {    
-    
-    constructor(props){
-        super(props);
-
-        const today = this.props.navigation.getParam('today', undefined);
-        console.log(today);
-
-        this.state ={
+        this.state = {
             items: {},
-            today: today === undefined ? null : today,
-            test: 1,
+            today: datetimeToString(),
         }
     }
+    
+    // 검색하면서 네비게이션 헤더에 매서드를 추가했을때 자기자신 화면에 대한 콜백함수를 이런식으로 등록함을 찾음
+    componentDidMount() {
+        this.props.navigation.setParams({ onPressLeftHeader: () => this.gotoToday() })
+    }
 
-    onPressLeftHeader = () => {
-        console.log("aaaa");
-        return (
-           <View></View>
-        )        
+    gotoToday = () => {
+        //console.log("gotoToday");     
+        // 직접 구현은 못했고 검색하다보니 chooseDay 이라는 api가 있는 것을 나중에 알게 됨
+        this.agenda.chooseDay(datetimeToString());
     }
 
     render() {
         return (
             <View style={styles.container}>                
               <Agenda
+                    // 참조를 만들어서 gotoToday 에서 사용할 수 있다.. 뭐 이런 방식...
+                    ref={(agenda) => { this.agenda = agenda; }}
                     monthFormat={'yyyy MM'}
                     // the list of items that have to be displayed in agenda. If you want to render item as empty date
                     // the value of date key kas to be an empty array []. If there exists no value for date key it is
@@ -74,11 +54,11 @@ class HomeScreen extends Component {
                     // callback that fires when the calendar is opened or closed
                     onCalendarToggled={(calendarOpened) => {console.log(calendarOpened)}}
                     // callback that gets called on day press
-                    onDayPress={(day)=>{console.log('day pressed')}}
+                    onDayPress={(day) =>{ console.log('day pressed') }}
                     // callback that gets called when day changes while scrolling agenda list
                     onDayChange={(day)=>{console.log('day changed')}}
                     // initially selected day
-                    selected={'2019-02-11'}
+                    selected={this.state.today}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
                     //minDate={'2012-05-10'}
                     // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
