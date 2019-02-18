@@ -23,6 +23,7 @@ import MainTabNavigator from '@navigation/MainTabNavigator';
 const routeConfig = {
     MainTab: { screen: MainTabNavigator,  },
 
+   
     //Cash: { screen: CashScreen },
     //PurchaseHistory: { screen: PurchaseHistoryScreen },
     //GoodsDetail: { screen: GoodsDetailScreen },

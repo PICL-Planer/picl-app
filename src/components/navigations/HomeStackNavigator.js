@@ -30,6 +30,9 @@ import CreateTaskScreen from '@screen/home/CreateTaskScreen';
 const routeConfig = {
     Home: { screen: HomeScreen, navigationOptions: BothHeaderNavigationOptions },
     CreateTask: { screen: CreateTaskScreen, navigationOptions: RightHeaderNavigationOptions },
+
+ 
+
     //OldHome: { screen: OldHomeScreen, navigationOptions: OldBothHeaderNavigationOptions },
     //Notice: { screen: NoticeScreen, },
     //DetailNotice: { screen: DetailNoticeScreen },
