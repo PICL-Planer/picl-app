@@ -3,14 +3,18 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform,
+    ScrollView
 } from "react-native";
 
 import { colors } from '@util/Colors';
-import { InputItem, List, DatePickerView, Radio, WhiteSpace, Modal, Tabs } from 'antd-mobile-rn';
+import { InputItem, List, DatePickerView, Radio, WhiteSpace, Modal, Tabs, Checkbox, Popover } from 'antd-mobile-rn';
 import { Ionicons } from '@expo/vector-icons';
 import { Calendar, CalendarList } from 'react-native-calendars';
 import enUS from 'rmc-date-picker/lib/locale/en_US'
+
+const Item = Popover.Item
 
 const datetimeToString = () => {
     const date = new Date();
@@ -27,6 +31,14 @@ class CreateTaskScreen extends Component {
             alarmType: 0,
             visibleDate: false,
             checkWeek: true,
+            monday : false,
+            tuseday : false,
+            wednesday : false,
+            thursday : false,
+            friday : false,
+            saturday : false,
+            sunday : false,
+            selected: '',
         }
     }
     render() {
@@ -34,6 +46,8 @@ class CreateTaskScreen extends Component {
             { text: 'Cancel', onPress: () => console.log('cancel') },
             { text: 'Ok', onPress: () => console.log('ok') }
           ]
+
+    
         
         return (
             <View style={styles.container}> 
@@ -136,7 +150,7 @@ class CreateTaskScreen extends Component {
                         </View>
                     </TouchableOpacity>
                     <Modal style={{ width: 330, height: 400 }} transparent onClose={this.onCloseDate} maskClosable visible={this.state.visibleDate} footer={footerButtons} >
-                        <View style={{ flexDirection: 'row', height: 30, justifyContent: 'space-around' }}>
+                        <View style={{ flexDirection: 'row', height: 30, justifyContent: 'space-around', borderBottomColor: 'grey', borderBottomWidth: 1 }}>
                             <View style={{ width: '50%', height: '100%', borderRightColor: 'grey', borderRightWidth: 1,}}>
                                 <TouchableOpacity onPress={() => { this.setState({ checkWeek: true })} }>                                    
                                         <Text style={{textAlign: 'center'}}>매주</Text>  
@@ -150,40 +164,52 @@ class CreateTaskScreen extends Component {
                         </View>
                         { this.state.checkWeek === true ? (
                         <View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 10}}>
-                                <Text>월</Text>
-                                <Text>화</Text>
-                                <Text>수</Text>
-                                <Text>목</Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 20}}>
+                                <Checkbox checked={this.state.monday} style={{ tintColor: '#f00' }} onChange={(event) => { this.setState({ monday: event.target.checked }) }}>월</Checkbox>
+                                <Checkbox checked={this.state.tuseday} style={{ tintColor: '#f00' }} onChange={(event) => { this.setState({ tuseday: event.target.checked }) }}>화</Checkbox>
+                                <Checkbox checked={this.state.wednesday} style={{ tintColor: '#f00' }} onChange={(event) => { this.setState({ wednesday: event.target.checked }) }}>수</Checkbox>
+                                <Checkbox checked={this.state.thursday} style={{ tintColor: '#f00' }} onChange={(event) => { this.setState({ thursday: event.target.checked }) }}>목</Checkbox>
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 10}}>
-                                <Text>금</Text>
-                                <Text>토</Text>
-                                <Text>일</Text>
-                                <Text>매일</Text>
+                                <Checkbox checked={this.state.friday} style={{ tintColor: '#f00' }} onChange={(event) => { this.setState({ friday: event.target.checked }) }}>금</Checkbox>
+                                <Checkbox checked={this.state.saturday} style={{ tintColor: '#f00' }} onChange={(event) => { this.setState({ saturday: event.target.checked }) }}>토</Checkbox>
+                                <Checkbox checked={this.state.sunday} style={{ tintColor: '#f00' }} onChange={(event) => { this.setState({ sunday: event.target.checked }) }}>일</Checkbox>
+                                <Checkbox checked={this.state.week} style={{ tintColor: '#f00' }} onChange={(event) => this.onChangeWeek(event)}>매일</Checkbox>
                             </View>
-                            <View style={{flexDirection: 'column', marginTop: 10}}>
-                                <Text>반복종료일을 설정</Text>
-                                <Text>2019년 05월 18일 까지 반복</Text>
+                            <View style={{flexDirection: 'column', marginTop: 40}}>
+                                <TouchableOpacity
+                                    onPress={this.showModal}
+                                >
+                                    <View style={{marginBottom: 20}}>
+                                        <Text>반복종료일</Text>    
+                                    </View>
+                                </TouchableOpacity>
+                                <Text style={{ textAlign: 'center'}}>2019년 05월 18일 까지 반복</Text>
                             </View>
                         </View>
                         )
                         :          
-                        (             
-                        <View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 10}}>
-                                <Text>금</Text>
-                                <Text>토</Text>
-                                <Text>일</Text>
-                                <Text>매일</Text>
+                        ( 
+                            <View>
+                                <View style={{flexDirection: 'row',
+                                                justifyContent: 'flex-end',
+                                                height: 400,
+                                                paddingHorizontal: 5,
+                                                paddingVertical: 10}}>
+                                    <Popover
+                                            ref='mc'
+                                            name='m'
+                                            style={{ backgroundColor: '#eee' }}                                            
+                                            contextStyle={{ margin: 50, flex: 2}}
+                                            overlayStyle={{ left: 90, marginTop: 20, borderWidth: 1, borderColor: '#ccc' }}
+                                            triggerStyle={{ flexDirection: 'row', paddingHorizontal: 10, }} onSelect={this.onSelect}
+                                            renderOverlayComponent={this.testRender}
+                                    >
+                                        <Text>매월 </Text>
+                                    </Popover>
+                                </View>
                             </View>
-                            <View style={{flexDirection: 'column', marginTop: 10}}>
-                                <Text>반복종료일을 설정</Text>
-                                <Text>2019년 05월 18일 까지 반복</Text>
-                            </View>
-                        </View>
-                        )
-                        }
+                        )}
                     </Modal>
                     
                     <View style={{marginHorizontal: 10, height: 50, alignItems: 'flex-start', justifyContent:'center', borderBottomColor: 'grey', borderBottomWidth: 1,}}>
@@ -275,7 +301,42 @@ class CreateTaskScreen extends Component {
     showDate = () => this.setState({ visibleDate: true })
     onCloseDate = () => this.setState({ visibleDate: false })
 
+    onChangeWeek = (event) => { 
+        if (event.target.checked === true) {
+            this.setState({
+                monday : true,
+                tuseday : true,
+                wednesday : true,
+                thursday : true,
+                friday : true,
+                saturday : true,
+                sunday : true,
+            });
+        } else {
+            this.setState({
+                monday : false,
+                tuseday : false,
+                wednesday : false,
+                thursday : false,
+                friday : false,
+                saturday : false,
+                sunday : false,
+            });
+        }    
+    }
 
+    onSelect = value => this.setState({ selected: value })
+
+    testRender = () => {
+        let overlay = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31].map(
+                (i, index) => (<Item key={index} value={`${i}`}><Text>{i}일</Text></Item>))   
+        
+        return ( 
+            <ScrollView>
+            {overlay}
+            </ScrollView>
+            );
+    }
 }
 export default CreateTaskScreen;
 
