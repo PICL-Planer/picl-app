@@ -127,7 +127,7 @@ class SignUpScreen extends Component {
                                 <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
                                     <Checkbox checked={this.state.agree} style={{ tintColor: '#f00' }} 
                                         onChange={(event) => { this.setState({ agree: event.target.checked }) }} />
-                                    <Text style={{ marginLeft: 10, } }>서비스 이용약관 및 개인정보보고 정책에 동의 합니다.</Text>
+                                    <Text style={{ marginLeft: 10, } }>서비스 이용약관 및 개인정보 보호 정책에 동의 합니다.</Text>
                                 </View>  
                             </Item>
                         </List>

@@ -39,6 +39,8 @@ class CreateTaskScreen extends Component {
             saturday : false,
             sunday : false,
             selected: '',
+            month : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],    
+            visibleTaskType: false        
         }
     }
     render() {
@@ -47,7 +49,7 @@ class CreateTaskScreen extends Component {
             { text: 'Ok', onPress: () => console.log('ok') }
           ]
 
-    
+        let overlay = [1,2,3,4].map((i, index) => (<Item key={index} value={`option ${i}`}><Text>{i}번 째</Text></Item>))
         
         return (
             <View style={styles.container}> 
@@ -61,14 +63,56 @@ class CreateTaskScreen extends Component {
                 </View>
                 <View>
                     <TouchableOpacity
-                        onPress={() => console.log("aa")}
+                        onPress={() => (this.setState({ visibleTaskType: true }))}
                         activeOpacity={1}
                     >
                         <View style={{ marginHorizontal: 10 , flexDirection: 'row', height: 50, alignItems: 'center', justifyContent:'space-between', borderBottomColor: 'grey', borderBottomWidth: 1, }}>
-                            <Text>태스크 선택</Text>
+                            {/* <View style={{paddingHorizontal: 5,paddingVertical: 10}}>
+                                    <Popover
+                                        ref='mc'
+                                        name='m'
+                                        style={{ backgroundColor: '#eee' }}
+                                        overlay={overlay}
+                                        //contextStyle={{margin: 50}}
+                                        overlayStyle={{left: 90, marginTop: 20}}
+                                        triggerStyle={{flexDirection: 'row', paddingHorizontal: 10}} 
+                                        onSelect={this.onSelect}
+                                    > */}
+                                        <Text>태스크 선택</Text>
+                                    {/* </Popover>
+                            </View> */}
                             <Ionicons name={'ios-arrow-forward'} size={35} color={colors.baseColor} />
                         </View>
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => (this.setState({ visibleTaskType: true }))}
+                        activeOpacity={1}
+                    >
+                        <View style={{ marginHorizontal: 10 , flexDirection: 'row', height: 50, alignItems: 'center', justifyContent:'space-between', borderBottomColor: 'grey', borderBottomWidth: 1, }}>
+                            {/* <View style={{paddingHorizontal: 5,paddingVertical: 10}}>
+                                    <Popover
+                                        ref='mc'
+                                        name='m'
+                                        style={{ backgroundColor: '#eee' }}
+                                        overlay={overlay}
+                                        //contextStyle={{margin: 50}}
+                                        overlayStyle={{left: 90, marginTop: 20}}
+                                        triggerStyle={{flexDirection: 'row', paddingHorizontal: 10}} 
+                                        onSelect={this.onSelect}
+                                    > */}
+                                        <Text>그룹 타입</Text>
+                                    {/* </Popover>
+                            </View> */}
+                            <Ionicons name={'ios-arrow-forward'} size={35} color={colors.baseColor} />
+                        </View>
+                    </TouchableOpacity>
+                    <Modal style={{width : 330, height: 300}} transparent onClose={this.onClose} maskClosable visible={this.state.visibleTaskType} footer={footerButtons}>
+                            <View style={{flexDirection: 'column', alignItems: 'center',}}>
+                                <Text>Work</Text>
+                                <Text>Personal</Text>
+                                <Text>Social</Text>
+                            </View>
+                    </Modal>
                     {this.state.allDay !== 2 ?
                     <View style={{ marginHorizontal: 10 , height: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomColor: 'grey', borderBottomWidth: 1,  }}>
                         <View styel={{flexDirection: 'column', }}>
@@ -190,26 +234,70 @@ class CreateTaskScreen extends Component {
                         )
                         :          
                         ( 
-                            <View>
-                                <View style={{flexDirection: 'row',
-                                                justifyContent: 'flex-end',
-                                                height: 400,
-                                                paddingHorizontal: 5,
-                                                paddingVertical: 10}}>
+                        <View>
+                            <View style={{ flexDirection: 'column',}}>
+                                <TouchableOpacity 
+                                    onPress={this.showCalendar}
+                                >
+                                    <View>
+                                        <Text>매월 {this.state.choosedDay}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{flexDirection: 'row',paddingHorizontal: 5,paddingVertical: 10}}>
                                     <Popover
-                                            ref='mc'
-                                            name='m'
-                                            style={{ backgroundColor: '#eee' }}                                            
-                                            contextStyle={{ margin: 50, flex: 2}}
-                                            overlayStyle={{ left: 90, marginTop: 20, borderWidth: 1, borderColor: '#ccc' }}
-                                            triggerStyle={{ flexDirection: 'row', paddingHorizontal: 10, }} onSelect={this.onSelect}
-                                            renderOverlayComponent={this.testRender}
+                                        ref='mc'
+                                        name='m'
+                                        style={{ backgroundColor: '#eee' }}
+                                        overlay={overlay}
+                                        contextStyle={{margin: 50}}
+                                        overlayStyle={{left: 90, marginTop: 20}}
+                                        triggerStyle={{flexDirection: 'row', paddingHorizontal: 10}} onSelect={this.onSelect}
                                     >
-                                        <Text>매월 </Text>
+                                        <Text style={{width: 100}}>매월 3번째</Text>
                                     </Popover>
+                                    <Popover
+                                        ref='mc'
+                                        name='m'
+                                        style={{ backgroundColor: '#eee' }}
+                                        overlay={overlay}
+                                        contextStyle={{margin: 50}}
+                                        overlayStyle={{left: 90, marginTop: 20}}
+                                        triggerStyle={{flexDirection: 'row', paddingHorizontal: 10}} onSelect={this.onSelect}
+                                    >
+                                        <Text style={{ marginLeft: 5, width:100}}>화요일</Text>
+                                    </Popover>  
                                 </View>
                             </View>
+                            <View style={{flexDirection: 'column', marginTop: 40}}>
+                                <TouchableOpacity
+                                    onPress={this.showModal}
+                                >
+                                    <View style={{marginBottom: 20}}>
+                                        <Text>반복종료일</Text>    
+                                    </View>
+                                </TouchableOpacity>
+                                <Text style={{ textAlign: 'center'}}>2019년 05월 18일 까지 반복</Text>
+                            </View>    
+                        </View>
                         )}
+                    </Modal>
+                    <Modal style={{ width: 330, height: 400 }} transparent onClose={this.onCloseCalendar} visible={this.state.visibleCalendar} >
+                        <ScrollView>
+                            {
+                                this.state.month.map( (i, index) => (
+                            
+                                        <TouchableOpacity
+                                            key={index}
+                                            onPress={() => { this.setState({ visibleCalendar: false})}}
+                                        >
+                                            <View>
+                                                <Text >{i}일</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        )
+                                    ) 
+                            }
+                        </ScrollView>
                     </Modal>
                     
                     <View style={{marginHorizontal: 10, height: 50, alignItems: 'flex-start', justifyContent:'center', borderBottomColor: 'grey', borderBottomWidth: 1,}}>
@@ -301,6 +389,9 @@ class CreateTaskScreen extends Component {
     showDate = () => this.setState({ visibleDate: true })
     onCloseDate = () => this.setState({ visibleDate: false })
 
+    showCalendar = () => this.setState({ visibleCalendar: true})
+    onCloseCalendar = () => this.setState({ visibleCalendar: false})
+
     onChangeWeek = (event) => { 
         if (event.target.checked === true) {
             this.setState({
@@ -327,16 +418,7 @@ class CreateTaskScreen extends Component {
 
     onSelect = value => this.setState({ selected: value })
 
-    testRender = () => {
-        let overlay = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31].map(
-                (i, index) => (<Item key={index} value={`${i}`}><Text>{i}일</Text></Item>))   
-        
-        return ( 
-            <ScrollView>
-            {overlay}
-            </ScrollView>
-            );
-    }
+    
 }
 export default CreateTaskScreen;
 
